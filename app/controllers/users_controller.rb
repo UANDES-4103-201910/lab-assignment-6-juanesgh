@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :index]
   before_action :is_user_logged_in?
 
   # GET /users
@@ -39,11 +39,24 @@ class UsersController < ApplicationController
   def destroy
     #complete this method
   end
-
+  def is_user_logged_in?
+    #aqui va la maia de verificar que siempre este conectado, esto se realiza, verificando que la session siga activa y se igual a la id del usuario
+    #if session_controller.find(@user.id)
+    #  no pasa nada
+    #else
+    #  flash notice "Not authorized"
+    #redirect to home
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if User.find(params[:id])#no sirve esta fuuncion
+        #mandar error
+        @user = User.find(params[:id])
+
+      else
+        redirect_to root_path
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
